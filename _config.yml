@@ -5,10 +5,10 @@
 # Site
 title: xMuu's Blog
 subtitle: ''
-description: xMuu's Blog
+description: 'xMuu's Blog'
 keywords:
 author: xMuu
-language: zh
+language: zh_CN
 timezone: 'Asia/Shanghai'
 
 # URL
@@ -108,5 +108,5 @@ suka_theme:
     field: post # Page | Post | All. Default post
   prism:
     enable: false
-    line_number: true
+    line_number: false
     theme: default
