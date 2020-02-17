@@ -13,9 +13,14 @@ branches:
 before_install:
   - export TZ='Asia/Shanghai'
   - npm install -g hexo-cli
+  - git clone https://github.com/SukkaW/hexo-theme-suka themes/suka
+  - cp suka_config.yml themes/suka/_config.yml
 
 install:
   - npm install
+  - cd themes/suka
+  - npm install
+  - cd ../../
 
 script:
   - hexo g

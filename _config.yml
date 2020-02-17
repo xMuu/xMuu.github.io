@@ -5,8 +5,8 @@
 # Site
 title: xMuu's Blog
 subtitle: ''
-description: 'xMuu's Blog'
-keywords: xMuu,Blog
+description: xMuu's Blog
+keywords:
 author: xMuu
 language: zh
 timezone: 'Asia/Shanghai'
@@ -93,9 +93,20 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: suka
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: ''
+
+# Suka Theme
+suka_theme:
+  search:
+    enable: true
+    path: search.json
+    field: post # Page | Post | All. Default post
+  prism:
+    enable: false
+    line_number: true
+    theme: default
