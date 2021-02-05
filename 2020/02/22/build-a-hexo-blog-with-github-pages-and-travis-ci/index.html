@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>使用 GitHub Pages 和 Travis CI 搭建自动构建的 Hexo 博客 - xMuu&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="xMuu&#039;s Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="xMuu&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="简介Hexo 是个好东西，GitHub Pages 也是个好东西，那如何将这两个好东西放在一起用呢？那就是用 Travis CI 了。"><meta property="og:type" content="article"><meta property="og:title" content="使用 GitHub Pages 和 Travis CI 搭建自动构建的 Hexo 博客"><meta property="og:url" content="https://blog.xmuu.dev/2020/02/22/build-a-hexo-blog-with-github-pages-and-travis-ci/"><meta property="og:site_name" content="xMuu&#039;s Blog"><meta property="og:description" content="简介Hexo 是个好东西，GitHub Pages 也是个好东西，那如何将这两个好东西放在一起用呢？那就是用 Travis CI 了。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blog.xmuu.dev/img/og_image.png"><meta property="article:published_time" content="2020-02-22T15:29:02.000Z"><meta property="article:modified_time" content="2021-02-05T16:51:48.800Z"><meta property="article:author" content="xMuu"><meta property="article:tag" content="Hexo"><meta property="article:tag" content="GitHub"><meta property="article:tag" content="Travis CI"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.xmuu.dev/2020/02/22/build-a-hexo-blog-with-github-pages-and-travis-ci/"},"headline":"xMuu's Blog","image":["https://blog.xmuu.dev/img/og_image.png"],"datePublished":"2020-02-22T15:29:02.000Z","dateModified":"2021-02-05T16:51:48.800Z","author":{"@type":"Person","name":"xMuu"},"description":"简介Hexo 是个好东西，GitHub Pages 也是个好东西，那如何将这两个好东西放在一起用呢？那就是用 Travis CI 了。"}</script><link rel="canonical" href="https://blog.xmuu.dev/2020/02/22/build-a-hexo-blog-with-github-pages-and-travis-ci/"><link rel="alternate" href="/atom.xml" title="xMuu&#039;s Blog" type="application/atom+xml"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/css/justifiedGallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css"><meta name="generator" content="Hexo 5.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">xMuu&#039;s Blog</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/channels/">频道</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item" id="dark-mode-switch"><i class="fas fa-adjust"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-02-22T15:29:02.000Z" title="2/22/2020, 11:29:02 PM">2020-02-22</time>发表</span><span class="level-item"><time dateTime="2021-02-05T16:51:48.800Z" title="2/6/2021, 12:51:48 AM">2021-02-06</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Tech/">Tech</a></span></div></div><h1 class="title is-3 is-size-4-mobile">使用 GitHub Pages 和 Travis CI 搭建自动构建的 Hexo 博客</h1><div class="content"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Hexo 是个好东西，GitHub Pages 也是个好东西，那如何将这两个好东西放在一起用呢？那就是用 Travis CI 了。</p>
+<a id="more"></a>
+
+<p>本文的目的是使用 Travis CI 来自动生成并提交 Hexo 生成的静态页面到 GitHub Pages 仓库。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>一个良好的网络</li>
+<li>一个 <a target="_blank" rel="noopener" href="https://github.com/">GitHub</a> 账号</li>
+<li>配置好 Git </li>
+<li>参考 Hexo 文档装好 hexo-cli （<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85">文档地址</a>）</li>
+</ul>
+<h2 id="启用-Travis-CI"><a href="#启用-Travis-CI" class="headerlink" title="启用 Travis CI"></a>启用 Travis CI</h2><p>使用 GitHub 账号登录 <a target="_blank" rel="noopener" href="https://travis-ci.com/">Travis CI</a> ，授权 Travis CI 获取 GitHub 账户的资料。完成后，会跳转到 Travis CI 的页面，页面里面应该会提示你 <strong>Activate all repositories using GitHub Apps</strong> （对所有 GitHub 项目启用 Travis CI 自动构建），点击按钮后授权，以后新建的项目就都会自动启用 Travis CI 了。</p>
+<h2 id="创建-GitHub-Repositories"><a href="#创建-GitHub-Repositories" class="headerlink" title="创建 GitHub Repositories"></a>创建 GitHub Repositories</h2><p>在 GitHub 上创建 GP 仓库（仓库名为 GitHub 用户名 + <code>.github.io</code> ）和博客源码仓库（以下为 <code>blog-factory</code> ），均设置为公开仓库即可。</p>
+<blockquote>
+<p><em>Note</em>: 如果你不被人看到源码，那源码仓库也可以为私密仓库，但是 Travis CI 的自动构建只对公开仓库免费，私密仓库据说只有前一百次免费。</p>
+</blockquote>
+<p>创建完仓库后，将源码仓库克隆至本地。</p>
+<h2 id="准备博客源码"><a href="#准备博客源码" class="headerlink" title="准备博客源码"></a>准备博客源码</h2><ul>
+<li>在本地创建一个空文件夹（这里为 <code>blog-temp</code> ），用来生成博客的源码。</li>
+</ul>
+<blockquote>
+<p><em>Note</em>: 之所以要另起一个文件夹是因为 Hexo 的 init 指令只能作用于空文件夹。</p>
+</blockquote>
+<ul>
+<li>在终端中打开 <code>blog-temp</code> 并执行以下命令：<br><code>hexo init .</code><br>执行完毕后，将 <code>blog-temp</code> 的内容复制到源码仓库 <code>blog-factory</code> 的文件夹中。（ <code>.git</code> 文件夹不要复制。）</li>
+</ul>
+<h2 id="修改博客配置"><a href="#修改博客配置" class="headerlink" title="修改博客配置"></a>修改博客配置</h2><p>Hexo 博客的配置文件是项目根目录的 <code>_config.yml</code> ，根据需求修改配置文件。<br>如果要安装主题、插件之类，也在这里配置好。</p>
+<h2 id="测试博客"><a href="#测试博客" class="headerlink" title="测试博客"></a>测试博客</h2><ul>
+<li>执行 <code>hexo server --debug</code><br>确认是否能正常生成博客文件。</li>
+<li>访问 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a><br>确定博客能正常访问，没有 404 或者其他错误。</li>
+</ul>
+<p>完成后 Ctrl + C 结束进程，执行 <code>hexo clean</code> 清理无用文件。</p>
+<h2 id="编写-Travis-CI-配置文件"><a href="#编写-Travis-CI-配置文件" class="headerlink" title="编写 Travis CI 配置文件"></a>编写 Travis CI 配置文件</h2><p>在项目根目录创建文件 <code>.travis.yml</code> 。（注意，是以 <strong>.</strong> 开头的文件，在一些文件管理器中可能不会直接显示，需要打开相关设置。）<br>接下来在这个文件里面写入以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">language: node_js # 设置语言类型</span><br><span class="line">node_js: stable # 选择版本</span><br><span class="line">sudo: false # 设置权限</span><br><span class="line"></span><br><span class="line">branches: # 设置触发 CI 运行的分支</span><br><span class="line">  only:</span><br><span class="line">    - source</span><br><span class="line"></span><br><span class="line">cache: # 设置缓存，可以有效提高 CI 编译的速度</span><br><span class="line">  directories:</span><br><span class="line">    - node_modules</span><br><span class="line"> </span><br><span class="line">before_install: # 设置在安装之前的一些操作</span><br><span class="line">  - export TZ&#x3D;&#39;Asia&#x2F;Shanghai&#39; # 设置时区，于本地时间同步，防止一些时间的错误</span><br><span class="line"></span><br><span class="line">install: # 安装需要的工具</span><br><span class="line">  - npm install -g hexo-cli # 安装 Hexo </span><br><span class="line">  - npm install # 安装 Hexo 依赖</span><br><span class="line">  # 如果有需要安装的插件，或者是主题需要安装的依赖，也一并在在这里安装</span><br><span class="line">  # 切换目录后最终需要回到根目录，注意返回</span><br><span class="line"></span><br><span class="line">script:</span><br><span class="line">  - hexo g # 生成静态 HTML 文件</span><br><span class="line"></span><br><span class="line">after_script:</span><br><span class="line">  - cd .&#x2F;public</span><br><span class="line">  - git init</span><br><span class="line">  - git config user.name &quot;$&#123;GH_NAME&#125;&quot;</span><br><span class="line">  - git config user.email &quot;$&#123;GH_EMAIL&#125;&quot;</span><br><span class="line">  - git add .</span><br><span class="line">  - git commit -m &quot;Travis CI Auto Builder at $(date +&#39;%Y-%m-%d %H:%M:%S&#39;)&quot;</span><br><span class="line">  - git push --force --quiet &quot;https:&#x2F;&#x2F;$&#123;GH_TOKEN&#125;@$&#123;GH_REPO&#125;&quot; master:master</span><br></pre></td></tr></table></figure>
+<p>这样，整个构建和推送的流程脚本就编写完成了，到时候 Travis CI 就会按照上面的顺序执行，将生成的 HTML 文件推送到指定仓库指定分支。</p>
+<h2 id="生成-GitHub-Token"><a href="#生成-GitHub-Token" class="headerlink" title="生成 GitHub Token"></a>生成 GitHub Token</h2><p>打开 Github 的 <a target="_blank" rel="noopener" href="https://github.com/settings/">Settings</a> 页面，点击左边的 <strong>Developer settings</strong> ，然后选择 <strong>Personal access tokens</strong> ，点击 Generate new token ，生成一个 Token 。<br>在新页面中填入 Note ，设置一个名字或者其他有助于你记忆这个 Token 用途的信息，然后勾选下方 <strong>repo</strong> 的勾，会连带勾上四个子选项。<br>之后就拉到最下面直接保存，在新页面中会显示这个 token ，保存好，下一步要用到。</p>
+<h2 id="设置-Travis-CI-环境变量"><a href="#设置-Travis-CI-环境变量" class="headerlink" title="设置 Travis CI 环境变量"></a>设置 Travis CI 环境变量</h2><p>在上面的配置文件中，出现了 <code>$&#123;GH_NAME&#125;</code> ， <code>$&#123;GH_EMAIL&#125;</code> ， <code>$&#123;GH_TOKEN&#125;</code> ， <code>$&#123;GH_REPO&#125;</code> 这几个字符串，其实这个是 Travis CI 的变量引用，在执行的时候会被自动替换成已经设置好的值，现在就要来设置这几个值。</p>
+<ul>
+<li><p>打开 <a target="_blank" rel="noopener" href="https://travis-ci.com/">Travis CI</a> ，登录后点击右上角设置，在设置界面可以看到 GitHub 里面所有的 Repositories ，如果没有，请检查你的授权，让 Travis CI 可以获取到你的 Repositories 。</p>
+</li>
+<li><p>点击 <code>blog-factory</code> 右边的设置按钮，可以看到设置的页面，里面有一项名为 Environment Variables 的设置类。</p>
+</li>
+<li><p>依次添加名为 <code>GH_NAME</code> ， <code>GH_EMAIL</code> ， <code>GH_TOKEN</code> ，<code>GH_REPO</code> ，填入对应的值。</p>
+<table>
+<thead>
+<tr>
+<th align="left">NAME</th>
+<th align="left">VALUE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>GH_NAME</code></td>
+<td align="left"><code>xMuu</code></td>
+</tr>
+<tr>
+<td align="left"><code>GH_EMAIL</code></td>
+<td align="left"><code>mail@mail.com</code></td>
+</tr>
+<tr>
+<td align="left"><code>GH_TOKEN</code></td>
+<td align="left"><code>421ddfe66ed5a56ba19d6d1e1***************</code></td>
+</tr>
+<tr>
+<td align="left"><code>GH_REPO</code></td>
+<td align="left"><code>github.com/xMuu/xmuu.github.io</code></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<blockquote>
+<p><em>Note</em> : <code>GH_TOKEN</code> 应该保存好，避免泄漏，在设置的时候不要打开 <strong>DISPLAY VALUE IN BUILD LOG</strong> 。</p>
+</blockquote>
+<h2 id="上传博客源码"><a href="#上传博客源码" class="headerlink" title="上传博客源码"></a>上传博客源码</h2><p>首先整理一下目录的内容，删除没有用的各种文件。顺便执行一次 Hexo 的清理程序：<br><code>hexo clean</code><br>之后，检查安装的主题，是否有 <code>.git</code> 文件夹，有的话需要删除。<br>一切检查完毕后就在 <code>blog-factory</code> 目录下，执行以下命令，将博客源码上传至 GitHub 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;upload blog source&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<h2 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h2><p>上传过后，可以到 Travis CI 看看构建的过程，也可以直接等待 Travis CI 的邮件然后访问 GitHub Pages 查看结果。</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="1-主题有-npm-依赖"><a href="#1-主题有-npm-依赖" class="headerlink" title="1. 主题有 npm 依赖"></a>1. 主题有 npm 依赖</h3><p>如果主题需要安装 npm 依赖，如果依赖多的话，建议在 Travis CI 构建的时候使用 <code>npm install</code> 安装，记得在上传源码的时候在 <code>.gitignore</code> 中排除主题目录下的 <code>node_modules</code> 文件夹；不多的话则可以直接将 <code>node_modules</code> 附带上去。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>使用 GitHub Pages 和 Travis CI 搭建自动构建的 Hexo 博客</p><p><a href="https://blog.xmuu.dev/2020/02/22/build-a-hexo-blog-with-github-pages-and-travis-ci/">https://blog.xmuu.dev/2020/02/22/build-a-hexo-blog-with-github-pages-and-travis-ci/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>xMuu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-02-22</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2021-02-06</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Hexo/">Hexo</a><a class="link-muted mr-2" rel="tag" href="/tags/GitHub/">GitHub</a><a class="link-muted mr-2" rel="tag" href="/tags/Travis-CI/">Travis CI</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=5fec4c7ef4055d0012d60778&amp;product=inline-share-buttons" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="http://afdian.net/@imxMuu" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/02/28/using-smartisan-nut-pro-3-running-smartisan-os-7-2-2-1/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">坚果 Pro 3 以及 Smartisan OS 7.2.2.1 开箱体验</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/01/27/use-uup-dump-to-download-windows-install-image/"><span class="level-item">利用 UUP Dump 下载 Windows 镜像</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.2.5/dist/disqusjs.css"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script src="https://cdn.jsdelivr.net/npm/disqusjs@1.2.5/dist/disqus.js"></script><script>new DisqusJS({
+            shortname: 'xmuus-blog',
+            apikey: "ZgBkX9Wfj8GB57YIoNahkmjE35IuMChQkUE5a6maqQt4ZWvgA5RSf75BhhkrSjdW",
+            siteName: "xMuu's Blog",
+            identifier: "2020/02/22/build-a-hexo-blog-with-github-pages-and-travis-ci/",
+            url: "https://blog.xmuu.dev/2020/02/22/build-a-hexo-blog-with-github-pages-and-travis-ci/",
+            title: "使用 GitHub Pages 和 Travis CI 搭建自动构建的 Hexo 博客",
+            api: "https://disqus.skk.moe/disqus/",
+            admin: "xMuu",
+            adminLabel: "Admin",
+            nesting: 5,
+        });</script></div></div></div><div class="column column-left is-3-tablet is-3-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://www.gravatar.com/avatar/a738d61ab74259bd28d8a69a18b8f7a2?s=128" alt="xMuu"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">xMuu</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">9</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">3</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">20</p></a></div></div></nav></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#简介"><span class="level-left"><span class="level-item">1</span><span class="level-item">简介</span></span></a></li><li><a class="level is-mobile" href="#准备工作"><span class="level-left"><span class="level-item">2</span><span class="level-item">准备工作</span></span></a></li><li><a class="level is-mobile" href="#启用-Travis-CI"><span class="level-left"><span class="level-item">3</span><span class="level-item">启用 Travis CI</span></span></a></li><li><a class="level is-mobile" href="#创建-GitHub-Repositories"><span class="level-left"><span class="level-item">4</span><span class="level-item">创建 GitHub Repositories</span></span></a></li><li><a class="level is-mobile" href="#准备博客源码"><span class="level-left"><span class="level-item">5</span><span class="level-item">准备博客源码</span></span></a></li><li><a class="level is-mobile" href="#修改博客配置"><span class="level-left"><span class="level-item">6</span><span class="level-item">修改博客配置</span></span></a></li><li><a class="level is-mobile" href="#测试博客"><span class="level-left"><span class="level-item">7</span><span class="level-item">测试博客</span></span></a></li><li><a class="level is-mobile" href="#编写-Travis-CI-配置文件"><span class="level-left"><span class="level-item">8</span><span class="level-item">编写 Travis CI 配置文件</span></span></a></li><li><a class="level is-mobile" href="#生成-GitHub-Token"><span class="level-left"><span class="level-item">9</span><span class="level-item">生成 GitHub Token</span></span></a></li><li><a class="level is-mobile" href="#设置-Travis-CI-环境变量"><span class="level-left"><span class="level-item">10</span><span class="level-item">设置 Travis CI 环境变量</span></span></a></li><li><a class="level is-mobile" href="#上传博客源码"><span class="level-left"><span class="level-item">11</span><span class="level-item">上传博客源码</span></span></a></li><li><a class="level is-mobile" href="#查看结果"><span class="level-left"><span class="level-item">12</span><span class="level-item">查看结果</span></span></a></li><li><a class="level is-mobile" href="#附录"><span class="level-left"><span class="level-item">13</span><span class="level-item">附录</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#1-主题有-npm-依赖"><span class="level-left"><span class="level-item">13.1</span><span class="level-item">1. 主题有 npm 依赖</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Daily/"><span class="level-start"><span class="level-item">Daily</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Tech/"><span class="level-start"><span class="level-item">Tech</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><p class="is-size-7"><span>&copy; 2021 xMuu</span></p><p class="is-size-7">Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">Theme Modified by <a href="https://github.com/xMuu/hexo-theme-icarus" target="_blank" rel="noopener">xMuu</a> </p></div><div class="level-end"></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.8/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdnjs.loli.net/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><script src="/js/dark_mode.js" async></script><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

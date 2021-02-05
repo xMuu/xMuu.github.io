@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>安装 Arch Linux 后的一点微小的工作 - xMuu&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="xMuu&#039;s Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="xMuu&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="记录一下安装 Arch 之后一些需要的操作。"><meta property="og:type" content="article"><meta property="og:title" content="安装 Arch Linux 后的一点微小的工作"><meta property="og:url" content="https://blog.xmuu.dev/2019/12/30/some-tweaks-after-install-arch-linux/"><meta property="og:site_name" content="xMuu&#039;s Blog"><meta property="og:description" content="记录一下安装 Arch 之后一些需要的操作。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blog.xmuu.dev/img/og_image.png"><meta property="article:published_time" content="2019-12-30T07:57:00.000Z"><meta property="article:modified_time" content="2021-02-05T16:51:48.800Z"><meta property="article:author" content="xMuu"><meta property="article:tag" content="Arch Linux"><meta property="article:tag" content="Tweaks"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.xmuu.dev/2019/12/30/some-tweaks-after-install-arch-linux/"},"headline":"xMuu's Blog","image":["https://blog.xmuu.dev/img/og_image.png"],"datePublished":"2019-12-30T07:57:00.000Z","dateModified":"2021-02-05T16:51:48.800Z","author":{"@type":"Person","name":"xMuu"},"description":"记录一下安装 Arch 之后一些需要的操作。"}</script><link rel="canonical" href="https://blog.xmuu.dev/2019/12/30/some-tweaks-after-install-arch-linux/"><link rel="alternate" href="/atom.xml" title="xMuu&#039;s Blog" type="application/atom+xml"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/css/justifiedGallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css"><meta name="generator" content="Hexo 5.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">xMuu&#039;s Blog</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/channels/">频道</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item" id="dark-mode-switch"><i class="fas fa-adjust"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-12-30T07:57:00.000Z" title="12/30/2019, 3:57:00 PM">2019-12-30</time>发表</span><span class="level-item"><time dateTime="2021-02-05T16:51:48.800Z" title="2/6/2021, 12:51:48 AM">2021-02-06</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Tech/">Tech</a></span></div></div><h1 class="title is-3 is-size-4-mobile">安装 Arch Linux 后的一点微小的工作</h1><div class="content"><p>记录一下安装 Arch 之后一些需要的操作。</p>
+<a id="more"></a>
+
+<h2 id="开机前禁用-N-卡开源驱动并用-bbswitch-禁用-N-卡"><a href="#开机前禁用-N-卡开源驱动并用-bbswitch-禁用-N-卡" class="headerlink" title="开机前禁用 N 卡开源驱动并用 bbswitch 禁用 N 卡"></a>开机前禁用 N 卡开源驱动并用 bbswitch 禁用 N 卡</h2><blockquote>
+<p>Fxxk NVIDIA～（</p>
+</blockquote>
+<p>这一步是解决一些机子开机卡住的问题，并关闭 N 卡提高使用体验（解决发热 &amp; 提高续航）。</p>
+<ul>
+<li>首先禁用 nouveau 驱动<br> <code>sudo nano /etc/modprobe.d/blacklist-nouveau.conf</code><br> 输入 <code>blacklist nouveau</code> 并保存</li>
+<li>安装 bbswtich<br> <code>sudo pacman -S bbswitch</code></li>
+<li>接着新建配置文件 <code>/etc/modprobe.d/bbswitch.conf</code><br> <code>sudo nano /etc/modprobe.d/bbswitch.conf</code><br> 写入 <code>options bbswitch load_state=0</code> 并保存</li>
+<li>再新建一个配置文件 <code>/etc/modules-load.d/bbswitch.conf</code><br> <code>sudo nano /etc/modules-load.d/bbswitch.conf</code><br> 写入 <code>bbswitch</code> 并保存</li>
+</ul>
+<p>这样开机就会加载 bbswitch 模块并关闭 N 卡了。</p>
+<h2 id="安装-zsh"><a href="#安装-zsh" class="headerlink" title="安装 zsh"></a>安装 zsh</h2><ul>
+<li><code>sudo pacman -S zsh</code> <blockquote>
+<p>oh-my-zsh 用脚本装可以直接获取更新不用等打包。<br> 添加用户的时候加上参数 <code>-s /bin/zsh</code> 即可将默认 shell 设置为 zsh 。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="配置国内镜像源和第三方仓库"><a href="#配置国内镜像源和第三方仓库" class="headerlink" title="配置国内镜像源和第三方仓库"></a>配置国内镜像源和第三方仓库</h2><ul>
+<li>编辑 <code>/etc/pacman.conf</code><br> <code>sudo nano /etc/pacman.conf</code></li>
+<li>Misc options 中取消 <code>Color</code> ， <code>TotalDownload</code> ， <code>VerbosePkgLists</code> 的注释</li>
+<li>取消下方 <code>multilib</code> 的两行注释，注意不是 <code>testing</code> 那两行</li>
+<li>在文件的最下方添加   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">Server &#x3D; https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;archlinuxcn&#x2F;$arch</span><br><span class="line">   </span><br><span class="line">[arch4edu]</span><br><span class="line">Server &#x3D; https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;arch4edu&#x2F;$arch</span><br></pre></td></tr></table></figure></li>
+<li>保存后执行 <code>sudo pacman -Syy</code> 更新软件源数据库即可</li>
+</ul>
+<blockquote>
+<p>archlinuxcn : Arch Linux CN 源，作为官方社区源的补充，上面有很多官方源没有的软件包，还有些国内特色的包。<br>arch4edu : 面向高校用户推出的非官方软件仓库，主要包含高校用户常用的科研、教学及开发软件。</p>
+</blockquote>
+<h2 id="安装桌面环境以及一些其他东西"><a href="#安装桌面环境以及一些其他东西" class="headerlink" title="安装桌面环境以及一些其他东西"></a>安装桌面环境以及一些其他东西</h2><blockquote>
+<p>我是坚定的 KDE 党！（</p>
+</blockquote>
+<p><code>sudo pacman -S plasma konsole dolphin</code> # 如果有选项记得选 vlc<br><code>sudo pacman -Rcun discover</code> # 删除自带的商店，不删也行，但是这东西真的没啥用<br><code>sudo pacman -S pulseaudio-bluetooth alsa-plugins alsa-utils</code><br><code>sudo systemctl enable sddm</code><br><code>sudo systemctl enable NetworkManager</code></p>
+<h2 id="配置中文字体"><a href="#配置中文字体" class="headerlink" title="配置中文字体"></a>配置中文字体</h2><p>中文字体我选择了 Apple 的苹方字体（中文）搭配 SF-Pro （西文）这套解决方案。具体可以看<a target="_blank" rel="noopener" href="https://github.com/xMuu/arch-kde-fontconfig">这个</a>。</p>
+<h2 id="设置系统为中文"><a href="#设置系统为中文" class="headerlink" title="设置系统为中文"></a>设置系统为中文</h2><ul>
+<li>先编辑配置文件 <code>/etc/locale.conf</code><br> <code>sudo nano /etc/locale.gen</code></li>
+<li>取消掉 <code>en_GB.UTF-8</code>， <code>en_US.UTF-8</code>， <code>zh_CN.UTF-8</code> 的注释</li>
+<li>执行 <code>sudo locale-gen</code></li>
+<li>编辑 <code>/etc/locale.conf</code><br> <code>sudo nano /etc/locale.conf</code></li>
+<li>添加下面内容并保存 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LC_TIME&#x3D;en_GB.UTF-8</span><br><span class="line">LC_COLLATE&#x3D;C</span><br></pre></td></tr></table></figure></li>
+<li>在 KDE 中设置语言为中文，退出登陆后重启即可</li>
+</ul>
+<h2 id="安装输入法"><a href="#安装输入法" class="headerlink" title="安装输入法"></a>安装输入法</h2><ul>
+<li>输入法这里选择 fcitx5 ，因为对 KDE 友好，而且也足够好用<br> <code>sudo pacman -S fcitx5-git fcitx5-gtk-git fcitx5-qt5-git fcitx5-chinese-addons-git kcm-fcitx5-git</code><br> 这里安装的都是 CN 源上的版本，因为更新的比较快，功能齐全。最后一个 <code>kcm-fcitx5-git</code> 是在 KDE 上的输入法配置面板。</li>
+<li>编辑 <code>~/.pam_environment</code><br> <code>nano ~/.pam_environment</code></li>
+<li>添加下面内容并保存 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GTK_IM_MODULE&#x3D;fcitx5</span><br><span class="line">QT_IM_MODULE&#x3D;fcitx5</span><br><span class="line">XMODIFIERS&#x3D;@im&#x3D;fcitx5</span><br></pre></td></tr></table></figure></li>
+<li>安装完成后在 KDE 的系统设置里面，区域设置，输入法，添加 <code>pinyin</code> 到左边然后应用，就能使用拼音了，当然了还有五笔等一些输入方式，可以自己选</li>
+</ul>
+<h2 id="配置-Intel-核显-VA-API-以及-Chromium-的硬件加速"><a href="#配置-Intel-核显-VA-API-以及-Chromium-的硬件加速" class="headerlink" title="配置 Intel 核显 VA-API 以及 Chromium 的硬件加速"></a>配置 Intel 核显 VA-API 以及 Chromium 的硬件加速</h2><p>通过配置硬件加速，可以获得不错的浏览体验以及视频体验。</p>
+<ul>
+<li><p>先安装相应的驱动：<br> <code>pacman -S vulkan-intel intel-media-driver libva-utils</code></p>
+</li>
+<li><p>编辑 <code>~/.pam_environment</code><br> <code>nano ~/.pam_environment</code></p>
+</li>
+<li><p>写入以下内容并保存。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LIBVA_DRIVER_NAME&#x3D;iHD</span><br></pre></td></tr></table></figure></li>
+<li><p>退出登陆后重新登陆，运行 <code>vainfo</code> ，如果没错误的话，应该会有这样的输出：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vainfo: VA-API version: 1.6 (libva 2.5.0)</span><br><span class="line">vainfo: Driver version: Intel iHD driver - 1.0.0 vainfo: Supported</span><br><span class="line">profile and entrypoints</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>接下来就开始安装 Chromiun 并启用一些参数使得硬件加速全开。</p>
+</li>
+<li><p>安装支持硬件加速版本的 Chromiun<br> <code>pacman -S chromium-vaapi</code><br> 这个为 AUR 包，但是在 Arch Linux CN 源有已经编译打包好的，直接安装 CN 源上的就好了。</p>
+</li>
+<li><p>新建配置文件 <code>~/.config/chromium-flags.conf</code> ：<br> <code>nano ~/.config/chromium-flags.conf</code></p>
+</li>
+<li><p>写入 <code>--ignore-gpu-blacklist</code> 并保存退出。（如果原来这个文件存在要确定不能有 <code>--use-gl=egl</code> 这个参数）</p>
+</li>
+<li><p>打开 Chromium 并打开 <a href="about://flags"><code>about://flags</code></a> 。</p>
+</li>
+<li><p>搜索并启用 <code>GPU rasterization</code> ， <code>Out of process rasterization</code> ， <code>Zero-copy rasterizer</code> ， <code>Viz Hit-test SurfaceLayer</code> ， <code>Skia API for OOP-D compositing</code> （如果找不到则忽略，可能被更新加入了）<br> 打开 <code>about://gpu</code> 如果看到以下输出，则说明配置完成</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Graphics Feature Status</span><br><span class="line">Canvas: Hardware accelerated</span><br><span class="line">Flash: Hardware accelerated</span><br><span class="line">Flash Stage3D: Hardware accelerated</span><br><span class="line">Flash Stage3D Baseline profile: Hardware accelerated</span><br><span class="line">Compositing: Hardware accelerated</span><br><span class="line">Multiple Raster Threads: Enabled</span><br><span class="line">Out-of-process Rasterization: Hardware accelerated</span><br><span class="line">Hardware Protected Video Decode: Hardware accelerated</span><br><span class="line">Rasterization: Hardware accelerated</span><br><span class="line">Skia Renderer: Enabled</span><br><span class="line">Video Decode: Hardware accelerated</span><br><span class="line">Viz Display Compositor: Enabled</span><br><span class="line">Viz Hit-test Surface Layer: Enabled</span><br><span class="line">Vulkan: Disabled</span><br><span class="line">WebGL: Hardware accelerated</span><br><span class="line">WebGL2: Hardware accelerated</span><br></pre></td></tr></table></figure>
+<h2 id="切换-IO-调度器（可选）"><a href="#切换-IO-调度器（可选）" class="headerlink" title="切换 IO 调度器（可选）"></a>切换 IO 调度器（可选）</h2></li>
+<li><p>新建文件 <code>/etc/udev/rules.d/60-ioschedulers.rules</code><br> <code>sudo nano /etc/udev/rules.d/60-ioschedulers.rules</code></p>
+</li>
+<li><p>写入下面内容并保存。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ACTION&#x3D;&#x3D;&quot;add|change&quot;, KERNEL&#x3D;&#x3D;&quot;sd[a-z]|mmcblk[0-9]*&quot;, ATTR&#123;queue&#x2F;rotational&#125;&#x3D;&#x3D;&quot;0&quot;, ATTR&#123;queue&#x2F;scheduler&#125;&#x3D;&quot;mq-deadline&quot;</span><br><span class="line">ACTION&#x3D;&#x3D;&quot;add|change&quot;, KERNEL&#x3D;&#x3D;&quot;sd[a-z]&quot;, ATTR&#123;queue&#x2F;rotational&#125;&#x3D;&#x3D;&quot;1&quot;, ATTR&#123;queue&#x2F;scheduler&#125;&#x3D;&quot;bfq&quot;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="开启-SSD-Trim"><a href="#开启-SSD-Trim" class="headerlink" title="开启 SSD Trim"></a>开启 SSD Trim</h2><ul>
+<li><code>sudo systemctl enable fstrim.timer</code></li>
+</ul>
+<hr>
+<p><strong><del>大概就想到这么多，其他的以后补上。</del></strong></p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>  换了 macOS(Hackintosh) 了，真香！</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>安装 Arch Linux 后的一点微小的工作</p><p><a href="https://blog.xmuu.dev/2019/12/30/some-tweaks-after-install-arch-linux/">https://blog.xmuu.dev/2019/12/30/some-tweaks-after-install-arch-linux/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>xMuu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-12-30</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2021-02-06</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Arch-Linux/">Arch Linux</a><a class="link-muted mr-2" rel="tag" href="/tags/Tweaks/">Tweaks</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=5fec4c7ef4055d0012d60778&amp;product=inline-share-buttons" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="http://afdian.net/@imxMuu" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/01/27/use-uup-dump-to-download-windows-install-image/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">利用 UUP Dump 下载 Windows 镜像</span></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.2.5/dist/disqusjs.css"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script src="https://cdn.jsdelivr.net/npm/disqusjs@1.2.5/dist/disqus.js"></script><script>new DisqusJS({
+            shortname: 'xmuus-blog',
+            apikey: "ZgBkX9Wfj8GB57YIoNahkmjE35IuMChQkUE5a6maqQt4ZWvgA5RSf75BhhkrSjdW",
+            siteName: "xMuu's Blog",
+            identifier: "2019/12/30/some-tweaks-after-install-arch-linux/",
+            url: "https://blog.xmuu.dev/2019/12/30/some-tweaks-after-install-arch-linux/",
+            title: "安装 Arch Linux 后的一点微小的工作",
+            api: "https://disqus.skk.moe/disqus/",
+            admin: "xMuu",
+            adminLabel: "Admin",
+            nesting: 5,
+        });</script></div></div></div><div class="column column-left is-3-tablet is-3-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://www.gravatar.com/avatar/a738d61ab74259bd28d8a69a18b8f7a2?s=128" alt="xMuu"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">xMuu</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">9</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">3</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">20</p></a></div></div></nav></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#开机前禁用-N-卡开源驱动并用-bbswitch-禁用-N-卡"><span class="level-left"><span class="level-item">1</span><span class="level-item">开机前禁用 N 卡开源驱动并用 bbswitch 禁用 N 卡</span></span></a></li><li><a class="level is-mobile" href="#安装-zsh"><span class="level-left"><span class="level-item">2</span><span class="level-item">安装 zsh</span></span></a></li><li><a class="level is-mobile" href="#配置国内镜像源和第三方仓库"><span class="level-left"><span class="level-item">3</span><span class="level-item">配置国内镜像源和第三方仓库</span></span></a></li><li><a class="level is-mobile" href="#安装桌面环境以及一些其他东西"><span class="level-left"><span class="level-item">4</span><span class="level-item">安装桌面环境以及一些其他东西</span></span></a></li><li><a class="level is-mobile" href="#配置中文字体"><span class="level-left"><span class="level-item">5</span><span class="level-item">配置中文字体</span></span></a></li><li><a class="level is-mobile" href="#设置系统为中文"><span class="level-left"><span class="level-item">6</span><span class="level-item">设置系统为中文</span></span></a></li><li><a class="level is-mobile" href="#安装输入法"><span class="level-left"><span class="level-item">7</span><span class="level-item">安装输入法</span></span></a></li><li><a class="level is-mobile" href="#配置-Intel-核显-VA-API-以及-Chromium-的硬件加速"><span class="level-left"><span class="level-item">8</span><span class="level-item">配置 Intel 核显 VA-API 以及 Chromium 的硬件加速</span></span></a></li><li><a class="level is-mobile" href="#切换-IO-调度器（可选）"><span class="level-left"><span class="level-item">9</span><span class="level-item">切换 IO 调度器（可选）</span></span></a></li><li><a class="level is-mobile" href="#开启-SSD-Trim"><span class="level-left"><span class="level-item">10</span><span class="level-item">开启 SSD Trim</span></span></a></li><li><a class="level is-mobile" href="#后记"><span class="level-left"><span class="level-item">11</span><span class="level-item">后记</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Daily/"><span class="level-start"><span class="level-item">Daily</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Tech/"><span class="level-start"><span class="level-item">Tech</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><p class="is-size-7"><span>&copy; 2021 xMuu</span></p><p class="is-size-7">Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">Theme Modified by <a href="https://github.com/xMuu/hexo-theme-icarus" target="_blank" rel="noopener">xMuu</a> </p></div><div class="level-end"></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.8/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdnjs.loli.net/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><script src="/js/dark_mode.js" async></script><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
